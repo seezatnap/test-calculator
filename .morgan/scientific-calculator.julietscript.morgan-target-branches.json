@@ -1,0 +1,9 @@
+{
+  "target_branches": {
+    "Phase1WebGLFoundation": "feature/phase-1-webgl-foundation",
+    "Phase2ScientificDepth": "feature/phase-2-scientific-depth",
+    "Phase3VisualGraphing": "feature/phase-3-visual-graphing",
+    "Phase4PowerTools": "feature/phase-4-power-tools",
+    "Phase5HardeningRelease": "feature/phase-5-hardening-release"
+  }
+}
