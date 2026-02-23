@@ -1,0 +1,38 @@
+{
+  "artifacts": [
+    {
+      "name": "Phase1WebGLFoundation",
+      "prompt": "Implement Phase 1 only from the referenced PRD. Deliver a working WebGL scientific calculator foundation, parser/evaluator core, and baseline tests.",
+      "input_files": ["prds/phase-1-webgl-foundation-prd.md"],
+      "target_branch": "feature/phase-1-webgl-foundation"
+    },
+    {
+      "name": "Phase2ScientificDepth",
+      "prompt": "Implement Phase 2 only from the referenced PRD on top of Phase 1. Add scientific depth, precision controls, and expanded test coverage.",
+      "input_files": ["prds/phase-2-scientific-depth-prd.md"],
+      "using": ["Phase1WebGLFoundation"],
+      "target_branch": "feature/phase-2-scientific-depth"
+    },
+    {
+      "name": "Phase3VisualGraphing",
+      "prompt": "Implement Phase 3 only from the referenced PRD on top of Phase 2. Add WebGL graph visualization, plotting workflows, and performance-safe rendering.",
+      "input_files": ["prds/phase-3-visual-graphing-prd.md"],
+      "using": ["Phase2ScientificDepth"],
+      "target_branch": "feature/phase-3-visual-graphing"
+    },
+    {
+      "name": "Phase4PowerTools",
+      "prompt": "Implement Phase 4 only from the referenced PRD on top of Phase 3. Add solver, matrix/programmer mini-modes, and expert workflow tooling.",
+      "input_files": ["prds/phase-4-power-tools-prd.md"],
+      "using": ["Phase3VisualGraphing"],
+      "target_branch": "feature/phase-4-power-tools"
+    },
+    {
+      "name": "Phase5HardeningRelease",
+      "prompt": "Implement Phase 5 only from the referenced PRD on top of Phase 4. Perform hardening, accessibility, optimization, and release readiness work.",
+      "input_files": ["prds/phase-5-hardening-release-prd.md"],
+      "using": ["Phase4PowerTools"],
+      "target_branch": "feature/phase-5-hardening-release"
+    }
+  ]
+}
