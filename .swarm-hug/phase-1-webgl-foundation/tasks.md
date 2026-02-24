@@ -36,3 +36,6 @@
 
 ## Follow-up tasks (from sprint review)
 - [x] (#20) Tighten `runPreflightChecks` to enforce Phase 1 intent values and required artifacts (not just non-empty keys): reject mismatched `artifact`, `sourceBranch`, `targetBranch`, and missing expected artifact paths; add unit tests for these wrong-but-non-empty cases. (A)
+
+## Follow-up tasks (from sprint review)
+- [ ] (#21) Fix `runPreflightChecks` artifact validation to accept both absolute and repo-relative artifact paths (normalize before comparison), and add unit tests for the absolute-path happy path from `.swarm-hug/phase-1-webgl-foundation/specs.md` to prevent false `artifact-validation` failures.
