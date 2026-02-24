@@ -33,3 +33,9 @@
 - [ ] (#17) Build reducer-focused automated tests covering state transitions, invalid-expression recovery, `ANS`, history limits, and clear/backspace behavior to satisfy core logic coverage targets [5 pts] (blocked by #12)
 - [ ] (#18) Add integration checks for keyboard-only operation, keyboard-pointer parity, and canvas crispness expectations at DPR 1-3 [5 pts] (blocked by #15, #16, #17)
 - [ ] (#19) Produce Phase 1 handoff notes with known limitations and Phase 2 extension hooks, then run final rubric-based delivery grading before sign-off [5 pts] (blocked by #15, #16, #17, #18)
+
+## Follow-up tasks (from sprint review)
+- [ ] (#20) Update `runPreflightChecks` to enforce the documented required artifact set (`prompt.md`, `specs.md`, `tasks.md`, `prds/phase-1-webgl-foundation-prd.md`) so preflight cannot pass when required artifact entries are omitted.
+- [ ] (#21) Extend preflight validation to verify run-input phase/branch context alignment (not just `runInputProvided: boolean`) and return explicit mismatch issues.
+- [ ] (#22) Unify preflight issue codes and triage failure kinds so `branch_drift`, `artifact_missing`, and `run_input_missing` route through deterministic triage paths instead of `unknown`.
+- [ ] (#23) Add delivery-operations tests for missing required artifact entries, run-input context mismatches, and triage routing for every preflight failure code.
