@@ -2,7 +2,7 @@
 
 ## Delivery Foundation
 
-- [x] (#1) Define and document Phase 1 delivery operations: preflight checks (branch alignment, artifact/run-input validation), failure triage path, human-review decision gate, and end-of-sprint rubric scoring; scaffold strongly typed module boundaries for `render/`, `engine/`, `input/`, and `app/` with shared state/action contracts [5 pts]
+- [x] (#1) Define and document Phase 1 delivery operations: preflight checks (branch alignment, artifact/run-input validation), failure triage path, human-review decision gate, and end-of-sprint rubric scoring; scaffold strongly typed module boundaries for `render/`, `engine/`, `input/`, and `app/` with shared state/action contracts [5 pts] (A)
 
 ## Rendering & UI
 
