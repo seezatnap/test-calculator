@@ -6,7 +6,7 @@
 
 ## Rendering & UI
 
-- [A] (#2) Implement single-page bootstrap with one primary calculator `canvas`, prefer WebGL2 initialization, and show explicit fallback messaging when supported context is unavailable [5 pts] (blocked by #1)
+- [x] (#2) Implement single-page bootstrap with one primary calculator `canvas`, prefer WebGL2 initialization, and show explicit fallback messaging when supported context is unavailable [5 pts] (blocked by #1) (A)
 - [ ] (#3) Build responsive canvas sizing and device-pixel-ratio handling to keep rendering crisp from DPR 1 to 3 across desktop and mobile breakpoints [5 pts] (blocked by #2)
 - [ ] (#4) Create rendering foundation: shader program setup, geometry batches for keys/display panels, text atlas rendering, and a stable idle render loop targeting 60 FPS without mutating app state [5 pts] (blocked by #2)
 - [ ] (#5) Implement calculator UI composition inside the canvas with distinct zones for current expression, result preview, and mode/status row, plus responsive key grid layout [5 pts] (blocked by #3, #4)
@@ -15,7 +15,7 @@
 
 ## Engine & State
 
-- [A] (#8) Implement tokenizer and parser with deterministic grammar, explicit operator precedence/associativity for `+ - * / ^`, decimals, parentheses, and structured parser errors [5 pts] (blocked by #1)
+- [x] (#8) Implement tokenizer and parser with deterministic grammar, explicit operator precedence/associativity for `+ - * / ^`, decimals, parentheses, and structured parser errors [5 pts] (blocked by #1) (A)
 - [ ] (#9) Implement evaluator core with deterministic execution and decimal-safe arithmetic strategy for common operations, including explicit divide-by-zero and runtime error handling [5 pts] (blocked by #8)
 - [ ] (#10) Extend evaluator with scientific operations and unary behaviors: `sqrt`, `log`, `ln`, `sin`, `cos`, `tan`, sign toggle, and `%` semantics consistent with calculator UX [5 pts] (blocked by #9)
 - [ ] (#11) Build deterministic calculator reducer/state machine for input, edit, evaluate, and error flows, including one-action recovery via `C` after invalid expressions and strict separation from render mutations [5 pts] (blocked by #8, #9, #10)
