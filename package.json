@@ -1,0 +1,15 @@
+{
+  "name": "scientific-webgl-calculator-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phase 1 delivery operations and typed module scaffold.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "npm run typecheck",
+    "test": "npm run build && node dist/tests/run-tests.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
