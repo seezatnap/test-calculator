@@ -14,8 +14,8 @@ test("runPreflightChecks passes on aligned branch and complete inputs", () => {
     currentBranch: "phase-1-webgl-foundation-agent-aaron-fth0z1",
     expectedBranch: "phase-1-webgl-foundation-agent-aaron-fth0z1",
     artifacts: [
-      { path: "/project/.morgan/source-files/01-phase1webglfoundation-instructions.md", present: true },
-      { path: "/project/prds/phase-1-webgl-foundation-prd.md", present: true }
+      { path: ".morgan/source-files/01-phase1webglfoundation-instructions.md", present: true },
+      { path: "prds/phase-1-webgl-foundation-prd.md", present: true }
     ],
     runInputs: {
       artifact: "Phase1WebGLFoundation",
@@ -37,7 +37,7 @@ test("runPreflightChecks fails when branch, artifacts, and run inputs drift", ()
   const report = runPreflightChecks({
     currentBranch: "feature/mismatch",
     expectedBranch: "phase-1-webgl-foundation-agent-aaron-fth0z1",
-    artifacts: [{ path: "/project/prds/phase-1-webgl-foundation-prd.md", present: false }],
+    artifacts: [{ path: "prds/phase-1-webgl-foundation-prd.md", present: false }],
     runInputs: {
       artifact: "",
       sourceBranch: "main"
@@ -50,6 +50,63 @@ test("runPreflightChecks fails when branch, artifacts, and run inputs drift", ()
   assert.equal(report.checks[1].status, "fail");
   assert.equal(report.checks[2].status, "fail");
   assert.equal(report.requiredActions.length, 3);
+});
+
+test("runPreflightChecks fails when Phase 1 intent values are non-empty but wrong", () => {
+  const report = runPreflightChecks({
+    currentBranch: "phase-1-webgl-foundation-agent-aaron-fth0z1",
+    expectedBranch: "phase-1-webgl-foundation-agent-aaron-fth0z1",
+    artifacts: [
+      { path: ".morgan/source-files/01-phase1webglfoundation-instructions.md", present: true },
+      { path: "prds/phase-1-webgl-foundation-prd.md", present: true }
+    ],
+    runInputs: {
+      artifact: "Phase2ScientificDepth",
+      sourceBranch: "develop",
+      targetBranch: "feature/phase-2-scientific-depth"
+    },
+    requiredRunInputKeys: ["artifact", "sourceBranch", "targetBranch"]
+  });
+
+  assert.equal(report.passed, false);
+  assert.deepEqual(
+    report.checks.map((check) => check.status),
+    ["pass", "pass", "fail"]
+  );
+  assert.match(report.checks[2].details, /artifact \(expected "Phase1WebGLFoundation"/);
+  assert.match(report.checks[2].details, /sourceBranch \(expected "main"/);
+  assert.match(
+    report.checks[2].details,
+    /targetBranch \(expected "feature\/phase-1-webgl-foundation"/
+  );
+});
+
+test("runPreflightChecks fails when artifacts are present but omit expected Phase 1 paths", () => {
+  const report = runPreflightChecks({
+    currentBranch: "phase-1-webgl-foundation-agent-aaron-fth0z1",
+    expectedBranch: "phase-1-webgl-foundation-agent-aaron-fth0z1",
+    artifacts: [
+      { path: ".morgan/source-files/phase-2-instructions.md", present: true },
+      { path: "prds/phase-2-scientific-depth-prd.md", present: true }
+    ],
+    runInputs: {
+      artifact: "Phase1WebGLFoundation",
+      sourceBranch: "main",
+      targetBranch: "feature/phase-1-webgl-foundation"
+    },
+    requiredRunInputKeys: ["artifact", "sourceBranch", "targetBranch"]
+  });
+
+  assert.equal(report.passed, false);
+  assert.deepEqual(
+    report.checks.map((check) => check.status),
+    ["pass", "fail", "pass"]
+  );
+  assert.match(
+    report.checks[1].details,
+    /\.morgan\/source-files\/01-phase1webglfoundation-instructions\.md/
+  );
+  assert.match(report.checks[1].details, /prds\/phase-1-webgl-foundation-prd\.md/);
 });
 
 test("triageFailure routes failed recovery to human review", () => {
@@ -70,7 +127,10 @@ test("evaluateHumanReviewGate combines preflight and triage escalation", () => {
   const preflight = runPreflightChecks({
     currentBranch: "feature/mismatch",
     expectedBranch: "phase-1-webgl-foundation-agent-aaron-fth0z1",
-    artifacts: [{ path: "/project/prds/phase-1-webgl-foundation-prd.md", present: true }],
+    artifacts: [
+      { path: ".morgan/source-files/01-phase1webglfoundation-instructions.md", present: true },
+      { path: "prds/phase-1-webgl-foundation-prd.md", present: true }
+    ],
     runInputs: { artifact: "Phase1WebGLFoundation" },
     requiredRunInputKeys: ["artifact", "targetBranch"]
   });
