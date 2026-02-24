@@ -73,3 +73,4 @@ export const createApp = (initialState: AppState, modules: AppModules): AppContr
 };
 
 export * from "./delivery-operations";
+export * from "./bootstrap";
