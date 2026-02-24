@@ -89,6 +89,17 @@ const RUBRIC_MAX = {
 
 export const DELIVERY_PASS_THRESHOLD = 8;
 
+const PHASE_1_REQUIRED_ARTIFACT_PATHS = [
+  ".morgan/source-files/01-phase1webglfoundation-instructions.md",
+  "prds/phase-1-webgl-foundation-prd.md"
+] as const;
+
+const PHASE_1_RUN_INPUT_INTENT = {
+  artifact: "Phase1WebGLFoundation",
+  sourceBranch: "main",
+  targetBranch: "feature/phase-1-webgl-foundation"
+} as const;
+
 export function runPreflightChecks(input: PreflightInput): PreflightReport {
   const checks: Array<PreflightCheckResult> = [];
   const requiredActions: Array<string> = [];
@@ -108,14 +119,19 @@ export function runPreflightChecks(input: PreflightInput): PreflightReport {
     );
   }
 
-  const missingArtifacts = input.artifacts.filter((artifact) => !artifact.present);
-  const artifactsValid = missingArtifacts.length === 0;
+  const missingExpectedArtifactPaths = PHASE_1_REQUIRED_ARTIFACT_PATHS.filter(
+    (requiredPath) =>
+      !input.artifacts.some(
+        (artifact) => artifact.path === requiredPath && artifact.present
+      )
+  );
+  const artifactsValid = missingExpectedArtifactPaths.length === 0;
   checks.push({
     name: "artifact-validation",
     status: artifactsValid ? "pass" : "fail",
     details: artifactsValid
-      ? `Validated ${input.artifacts.length} artifact/run-input source files.`
-      : `Missing artifact paths: ${missingArtifacts.map((entry) => entry.path).join(", ")}.`
+      ? `Validated ${PHASE_1_REQUIRED_ARTIFACT_PATHS.length} required Phase 1 artifact paths.`
+      : `Missing required Phase 1 artifact paths: ${missingExpectedArtifactPaths.join(", ")}.`
   });
 
   if (!artifactsValid) {
@@ -124,17 +140,31 @@ export function runPreflightChecks(input: PreflightInput): PreflightReport {
     );
   }
 
-  const invalidRunInputKeys = input.requiredRunInputKeys.filter(
+  const requiredRunInputKeys = Array.from(
+    new Set([...input.requiredRunInputKeys, ...Object.keys(PHASE_1_RUN_INPUT_INTENT)])
+  );
+  const invalidRunInputKeys = requiredRunInputKeys.filter(
     (key) => !isRunInputValid(input.runInputs[key])
   );
-  const runInputsValid = invalidRunInputKeys.length === 0;
+  const mismatchedIntentInputs = Object.entries(PHASE_1_RUN_INPUT_INTENT)
+    .filter(([key, expectedValue]) => {
+      const actualValue = input.runInputs[key];
+      return isRunInputValid(actualValue) && actualValue !== expectedValue;
+    })
+    .map(
+      ([key, expectedValue]) =>
+        `${key} (expected "${expectedValue}", received "${String(input.runInputs[key])}")`
+    );
+  const runInputsValid =
+    invalidRunInputKeys.length === 0 && mismatchedIntentInputs.length === 0;
+  const runInputIssues = [...invalidRunInputKeys, ...mismatchedIntentInputs];
 
   checks.push({
     name: "run-input-validation",
     status: runInputsValid ? "pass" : "fail",
     details: runInputsValid
-      ? `Validated ${input.requiredRunInputKeys.length} required run inputs.`
-      : `Missing or invalid run inputs: ${invalidRunInputKeys.join(", ")}.`
+      ? `Validated ${requiredRunInputKeys.length} required run inputs.`
+      : `Missing, invalid, or mismatched run inputs: ${runInputIssues.join(", ")}.`
   });
 
   if (!runInputsValid) {
