@@ -2,7 +2,7 @@
 
 ## Delivery Foundation
 
-- [ ] (#1) Define and document Phase 1 delivery operations: preflight checks (branch alignment, artifact/run-input validation), failure triage path, human-review decision gate, and end-of-sprint rubric scoring; scaffold strongly typed module boundaries for `render/`, `engine/`, `input/`, and `app/` with shared state/action contracts [5 pts]
+- [x] (#1) Define and document Phase 1 delivery operations: preflight checks (branch alignment, artifact/run-input validation), failure triage path, human-review decision gate, and end-of-sprint rubric scoring; scaffold strongly typed module boundaries for `render/`, `engine/`, `input/`, and `app/` with shared state/action contracts [5 pts] (A)
 
 ## Rendering & UI
 
@@ -33,3 +33,6 @@
 - [ ] (#17) Build reducer-focused automated tests covering state transitions, invalid-expression recovery, `ANS`, history limits, and clear/backspace behavior to satisfy core logic coverage targets [5 pts] (blocked by #12)
 - [ ] (#18) Add integration checks for keyboard-only operation, keyboard-pointer parity, and canvas crispness expectations at DPR 1-3 [5 pts] (blocked by #15, #16, #17)
 - [ ] (#19) Produce Phase 1 handoff notes with known limitations and Phase 2 extension hooks, then run final rubric-based delivery grading before sign-off [5 pts] (blocked by #15, #16, #17, #18)
+
+## Follow-up tasks (from sprint review)
+- [ ] (#20) Tighten `runPreflightChecks` to enforce Phase 1 intent values and required artifacts (not just non-empty keys): reject mismatched `artifact`, `sourceBranch`, `targetBranch`, and missing expected artifact paths; add unit tests for these wrong-but-non-empty cases.
